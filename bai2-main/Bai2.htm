@@ -1,0 +1,199 @@
+﻿<HTML>
+<HEAD>
+    <style>
+        html, body {
+            height: 100%;
+            width:100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            overflow:auto;
+        }
+ 
+         
+        .selected{
+            background-color : green;
+        }
+
+
+ </style>
+ </HEAD>
+<BODY ID=CBai2Dlg BGCOLOR=white style="font-family:MS Shell Dlg;font-size:8">
+    <div id="screen">
+    <div id="container_table">
+        <table border="1" width="100%" id="table">
+            <tr>
+                <th>ID</th>
+                <th>Account</th>
+                <th>HoTen</th>
+                <th>QueQuan</th>
+                <th>NgaySinh</th>
+                <th>GioiTinh</th>
+                <th>TruongHoc</th>
+                <th>SoDienThoai</th>
+            </tr>
+        </table>
+    </div>
+
+    <div id="container_button">
+        <button type="button" id="add" >Add</button>
+        <button type="button" id="edit">Edit</button>
+        <button type="button" id="remove">Remove</button>
+    </div>
+    </div>
+    <script>
+        if (!window.JSON) {
+            window.JSON = {
+                parse: function (s) { return eval('(' + s + ')'); },
+                stringify: function (obj) {
+                    var t = typeof obj;
+                    if (t != "object" || obj === null) {
+                        // simple value
+                        if (t == "string") obj = '"' + obj + '"';
+                        return String(obj);
+                    } else {
+                        // array or object
+                        var json = [], isArray = (obj && obj.constructor == Array);
+                        for (var n in obj) {
+                            var v = obj[n]; t = typeof v;
+                            if (t == "string") v = '"' + v + '"';
+                            else if (t == "object" && v !== null) v = JSON.stringify(v);
+                            json.push((isArray ? "" : '"' + n + '":') + String(v));
+                        }
+                        return (isArray ? "[" : "{") + String(json) + (isArray ? "]" : "}");
+                    }
+                }
+            };
+        }
+        
+        
+        function onAdd(param) {
+            var array = JSON.parse(param);
+
+            var table = document.getElementById('table');
+            var newRow = table.insertRow(-1); // thêm vào cuối bảng
+
+            for (var i = 0; i < 8; i++) {
+                var newCell = newRow.insertCell(-1);
+                if (i == 0)
+                    array[i] = Number(array[i]); 
+                if (i == 4)
+                    array[i] = array[i].substring(0,10);
+                if (i == 5) {
+
+                    //alert(array[i]);
+                    newCell.innerText = (array[i] == 1) ? "Nam" : "Nữ"; // IE8 không hỗ trợ innerText trên tất cả element
+                }
+                else
+                    newCell.innerText = array[i];
+            }
+
+
+            newRow.onclick = function () {
+                var className = this.className;
+
+                if (className.indexOf('selected') === -1) {
+                    this.className += ' selected';
+                } else {
+                    // loại bỏ 'selected' và các khoảng trắng dư thừa
+                    this.className = className.replace('selected', '');
+                }
+            };
+        }
+
+        function onUpdate(param) {
+
+            var array = JSON.parse(param); 
+            var table = document.getElementById('table'); 
+            var rowIndex = parseInt(array[0], 10); 
+            for (var i = 1; i < array.length; i++) {
+                //alert(array[i]);
+                table.rows[rowIndex].cells[i - 1].innerText = array[i]; 
+            }
+        }
+        function onRemove() {
+            var array = JSON.parse(getRecordSelectedIndex()); // đảm bảo là mảng thực
+            array.sort(function (a, b) { return b - a; });
+            var table = document.getElementById('table');
+
+            // Sắp xếp giảm dần để xóa từ dòng lớn đến nhỏ
+
+            for (var i = 0; i < array.length; i++) {
+                if (array[i] >= 0 && array[i] < table.rows.length) {
+                    table.deleteRow(array[i]);
+                }
+            }
+        }
+        function getRecordSelectedIndex() {
+            var selected = [];
+            var table = document.getElementById('table');
+            for (var i = 0; i < table.rows.length; i++) {
+
+                if (table.rows[i].className.indexOf('selected') !== -1) {
+                    selected.push(i);
+                }
+            }
+            return JSON.stringify(selected); 
+        }
+
+        function getRecordSelectedId() {
+            var selected = [];
+            var table = document.getElementById('table');
+            for (var i = 1; i < table.rows.length; i++) {
+
+                if (table.rows[i].className.indexOf('selected') !== -1) {
+                    selected.push(Number(table.rows[i].cells[0].innerText));
+                    //alert(table.rows[i].cells[1].innerText);
+                }
+            }
+            
+            return JSON.stringify(selected);
+        }
+
+
+        function getRecord(index) {
+            var ret = [];
+            var table = document.getElementById('table');
+            for (var i = 0; i < table.rows[index].cells.length; i++) { // Lặp qua từng cột của dòng index
+                ret.push(table.rows[index].cells[i].innerText);
+            }
+            return JSON.stringify(ret);
+        }
+        function resizeAreas() {
+            var h = document.body.clientHeight;
+            var w = document.body.clientWidth;
+            document.getElementById('container_table').style.height = (h * 0.9) + 'px';
+            document.getElementById('container_button').style.height = (h * 0.1) + 'px';
+
+            var btnW = w / 3; 
+            document.getElementById('add').style.width = btnW + 'px';
+            document.getElementById('add').style.left = '0px'; 
+            document.getElementById('add').style.height = (h*0.1) + 'px'; 
+
+            document.getElementById('edit').style.width = btnW + 'px';
+            document.getElementById('edit').style.left = btnW + 'px'
+            document.getElementById('edit').style.height = (h*0.1) + 'px'; 
+
+            document.getElementById('remove').style.width = btnW + 'px';
+            document.getElementById('remove').style.left = (2 * btnW) +  'px';  
+            document.getElementById('remove').style.height = (h*0.1) + 'px'; 
+        }
+        window.onresize = resizeAreas;
+        window.onload = function () {
+            resizeAreas();  
+            var table = document.getElementById('table');
+            for (var i = 1; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    // Kiểm tra nếu có class 'selected'
+                    var className = this.className;
+                    if (className.indexOf('selected') === -1) {
+                        this.className += ' selected';
+                    } else {
+                        this.className = className.replace('selected', '');
+                    }
+                };
+            }
+        };
+    </script>
+</BODY>
+</HTML>

@@ -1,0 +1,48 @@
+
+// MainFrm.h : interface of the CMainFrame class
+//
+
+#pragma once
+#include "MFCApplication1View.h"
+#include "CLeftView.h"
+#include "CRightView.h"
+class CMainFrame : public CFrameWnd
+{
+	
+protected: // create from serialization only
+	CMainFrame() noexcept;
+	DECLARE_DYNCREATE(CMainFrame)
+
+// Attributes
+protected:
+	CSplitterWnd m_wndSplitter;
+public:
+
+// Operations
+public:
+
+// Overrides
+public:
+	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	afx_msg void OnSize(UINT uType, int cx, int cy);
+// Implementation
+public:
+	virtual ~CMainFrame();
+#ifdef _DEBUG
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
+
+#endif
+
+//protected:  // control bar embedded members
+	//CToolBar          m_wndToolBar;
+
+// Generated message map functions
+protected:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	DECLARE_MESSAGE_MAP()
+
+};
+
+

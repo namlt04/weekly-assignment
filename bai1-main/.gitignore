@@ -1,0 +1,11 @@
+.vs/
+x64/
+*.pch
+*.ipch
+*.db
+*.obj
+*.exe
+*.log
+*.sdf
+*.user
+*.VC.db
