@@ -54,60 +54,60 @@ BOOL CInputDialog::OnInitDialog()
 }
 void CInputDialog::OnBnClicked()
 {
-	CString HoTen, QueQuan, Account, TruongHoc, SoDienThoai, NgaySinh, GioiTinh;
-	GetDlgItem(IDC_HOTEN)->GetWindowTextW(HoTen);
-	GetDlgItem(IDC_ACCOUNT)->GetWindowTextW(Account);
-	GetDlgItem(IDC_QUEQUAN)->GetWindowTextW(QueQuan);
-	GetDlgItem(IDC_TRUONGHOC)->GetWindowTextW(TruongHoc);
-	GetDlgItem(IDC_SODIENTHOAI)->GetWindowTextW(SoDienThoai);
-	GetDlgItem(IDC_GIOITINH)->GetWindowTextW(GioiTinh);
-	COleDateTime date; 
-	m_dtcTime.GetTime(date); 
-	NgaySinh.Format(_T("%04d-%02d-%02d"), date.GetYear(), date.GetMonth(), date.GetDay()); 
-	(GioiTinh == _T("Nam")) ? GioiTinh = _T("1") : GioiTinh = _T("0"); 
+	//CString HoTen, QueQuan, Account, TruongHoc, SoDienThoai, NgaySinh, GioiTinh;
+	//GetDlgItem(IDC_HOTEN)->GetWindowText(HoTen);
+	//GetDlgItem(IDC_ACCOUNT)->GetWindowText(Account);
+	//GetDlgItem(IDC_QUEQUAN)->GetWindowText(QueQuan);
+	//GetDlgItem(IDC_TRUONGHOC)->GetWindowText(TruongHoc);
+	//GetDlgItem(IDC_SODIENTHOAI)->GetWindowText(SoDienThoai);
+	//GetDlgItem(IDC_GIOITINH)->GetWindowText(GioiTinh);
+	//COleDateTime date; 
+	//m_dtcTime.GetTime(date); 
+	//NgaySinh.Format(_T("%04d-%02d-%02d"), date.GetYear(), date.GetMonth(), date.GetDay()); 
+	//(GioiTinh == _T("Nam")) ? GioiTinh = _T("1") : GioiTinh = _T("0"); 
 
 
-	// Kiểm tra và đặt thông báo
-	CString noti = _T("");
-	if (Account.IsEmpty())
-	{
-		noti += _T("Account, ");
-	}
+	//// Kiểm tra và đặt thông báo
+	//CString noti = _T("");
+	//if (Account.IsEmpty())
+	//{
+	//	noti += _T("Account, ");
+	//}
 
-	if (QueQuan.IsEmpty())
-	{
-		noti += _T("QueQuan, ");
+	//if (QueQuan.IsEmpty())
+	//{
+	//	noti += _T("QueQuan, ");
 
-	}
+	//}
 
-	if (HoTen.IsEmpty())
-	{
-		noti += _T("HoTen, ");
-	}
+	//if (HoTen.IsEmpty())
+	//{
+	//	noti += _T("HoTen, ");
+	//}
 
-	if (SoDienThoai.IsEmpty())
-	{
-		noti += _T("SoDienThoai ");
-	}
-	noti += _T("không được bỏ trống!");
-	if (noti != _T("không được bỏ trống!")) {
-		AfxMessageBox(noti); 
-	} else if (!(noti = CheckNumberPhone(SoDienThoai)).IsEmpty())
-	{
-		AfxMessageBox(noti); 
-	}
-	else
-	{
-		vt_str.push_back(std::string(CT2A(Account, CP_UTF8)));
-		vt_str.push_back(std::string(CT2A(HoTen, CP_UTF8)));
-		vt_str.push_back(std::string(CT2A(QueQuan, CP_UTF8)));
-		vt_str.push_back(std::string(CT2A(NgaySinh, CP_UTF8)));
-		vt_str.push_back(std::string(CT2A(GioiTinh, CP_UTF8)));
-		vt_str.push_back(std::string(CT2A(TruongHoc, CP_UTF8)));
-		vt_str.push_back(std::string(CT2A(SoDienThoai, CP_UTF8)));
+	//if (SoDienThoai.IsEmpty())
+	//{
+	//	noti += _T("SoDienThoai ");
+	//}
+	//noti += _T("không được bỏ trống!");
+	//if (noti != _T("không được bỏ trống!")) {
+	//	AfxMessageBox(noti); 
+	//} else if (!(noti = CheckNumberPhone(SoDienThoai)).IsEmpty())
+	//{
+	//	AfxMessageBox(noti); 
+	//}
+	//else
+	//{
+	//	vt_str.push_back(std::string(CT2A(Account, CP_UTF8)));
+	//	vt_str.push_back(std::string(CT2A(HoTen, CP_UTF8)));
+	//	vt_str.push_back(std::string(CT2A(QueQuan, CP_UTF8)));
+	//	vt_str.push_back(std::string(CT2A(NgaySinh, CP_UTF8)));
+	//	vt_str.push_back(std::string(CT2A(GioiTinh, CP_UTF8)));
+	//	vt_str.push_back(std::string(CT2A(TruongHoc, CP_UTF8)));
+	//	vt_str.push_back(std::string(CT2A(SoDienThoai, CP_UTF8)));
 
-		CDialog::OnOK(); 
-	}
+	//	CDialog::OnOK(); 
+	//}
 
 
 }
